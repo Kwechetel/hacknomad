@@ -84,13 +84,17 @@ exports.sendConfirm = (req, res, next) => {
             text: confrimToken
         };
 
-        transporter.sendMail(mailOptions, (err, data) => {
-            if(err) {
-                console.log('send email fail', err)
-            }else {
-                console.log('Email send!!!')
-            }
-        });
+        console.log(req.params.id)
+
+        if(req.params.id) {
+            transporter.sendMail(mailOptions, (err, data) => {
+                if(err) {
+                    res.status(200).json([{message: 'Confirmation failed!'}])
+                }else {
+                    res.status(200).json([{message: 'Confirmation successful!'}])
+                }
+            });
+        }
     });
 
 }
